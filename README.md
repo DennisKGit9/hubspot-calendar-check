@@ -24,15 +24,18 @@ automatically.
    time, and merges overlapping/adjacent blocks.
 3. `src/ics_writer.py` writes a full-snapshot `output/busy.ics` with deterministic
    event UIDs (re-publishing updates events in place; freed slots disappear).
-4. `.github/workflows/sync.yml` runs daily and deploys the feed to Pages. Two UTC
-   crons (17:00 + 18:00) cover DST; `src/timeguard.py` lets only the run that is
-   19:00 in Berlin proceed.
+4. `.github/workflows/sync.yml` runs daily and force-pushes the feed to the
+   `gh-pages` branch (served by Pages "Deploy from a branch" — no Actions
+   artifact storage involved). Two UTC crons (17:00 + 18:00) cover DST;
+   `src/timeguard.py` lets only the run that is 19:00 in Berlin proceed.
 
 ## One-time setup
 
-1. **Enable GitHub Pages:** repo **Settings → Pages → Source = "GitHub Actions"**.
-2. **Run the workflow once:** **Actions → hubspot-busy-ics → Run workflow**
-   (leave "Bypass the time guard" checked). This builds and deploys the feed.
+1. **Run the workflow once:** **Actions → hubspot-busy-ics → Run workflow**
+   (leave "Bypass the time guard" checked). This builds the feed and force-pushes
+   it to the `gh-pages` branch.
+2. **Enable GitHub Pages:** repo **Settings → Pages → Source = "Deploy from a
+   branch"**, branch **`gh-pages`**, folder **`/ (root)`**.
 3. **Subscribe in Google Calendar:** *Other calendars → ＋ → Subscribe to
    calendar / From URL* → paste the feed URL above. (Apple/Outlook calendars work
    the same way via their "subscribe to calendar" option.)
@@ -40,8 +43,12 @@ automatically.
 Google refreshes subscribed URLs on its own cadence (often several hours up to a
 day) — this is a Google behavior, not something the feed controls.
 
-No secrets are required: the HubSpot endpoint is public and the Pages deploy uses
-the built-in `GITHUB_TOKEN`.
+No secrets are required: the HubSpot endpoint is public and the push to
+`gh-pages` uses the built-in `GITHUB_TOKEN`.
+
+> **Note:** GitHub Pages on a **private** repo requires a paid plan (Pro/Team).
+> If the repo is private and on the Free plan, either make it public or host the
+> generated `busy.ics` somewhere with a public HTTPS URL.
 
 ## Run / test locally
 
