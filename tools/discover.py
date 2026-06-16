@@ -1,96 +1,70 @@
-"""One-shot endpoint discovery (run in CI, where HubSpot is reachable).
-
-The meetings page is a pure SPA; the availability endpoint is constructed inside
-the JS bundle. This script fetches the page, pulls every referenced script, and
-greps the bundles for API path fragments so we can identify the real endpoint.
+"""One-shot endpoint probe: hit the real availability-page endpoint variants
+and dump JSON structure so we can finalize the parser.
 """
 from __future__ import annotations
 
-import re
+import json
 
 import requests
 
-BASE = "https://meetings-eu1.hubspot.com"
 SLUG = "dennis-kwiatkowski"
+TZ = "Europe/Berlin"
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
         "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     ),
-    "Accept": "*/*",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": f"{BASE}/{SLUG}",
-    "Origin": BASE,
+    "Accept": "application/json, text/plain, */*",
+    "Referer": f"https://meetings-eu1.hubspot.com/{SLUG}",
+    "Origin": "https://meetings-eu1.hubspot.com",
 }
 
-KEYWORDS = [
-    "availability", "available", "booking", "scheduler", "meeting-links",
-    "meetingsBook", "linkAvailability", "/api/", "monthOffset", "freeBusy",
+QS = f"slug={SLUG}&monthOffset=0&timezone={TZ}"
+CANDIDATES = [
+    f"https://meetings-eu1.hubspot.com/api/meetings-public/v3/book/availability-page?{QS}",
+    f"https://meetings-eu1.hubspot.com/meetings-public/v3/book/availability-page?{QS}",
+    f"https://api.hubspot.com/meetings-public/v3/book/availability-page?{QS}",
+    f"https://meetings-eu1.hubspot.com/api/meetings-public/v3/book/book-info?slug={SLUG}",
 ]
 
 
-def get(url):
-    return requests.get(url, headers=HEADERS, timeout=30)
-
-
-def grep(text, label):
-    found = False
-    for kw in KEYWORDS:
-        for m in re.finditer(re.escape(kw), text):
-            found = True
-            i = m.start()
-            snippet = text[max(0, i - 90):i + 110].replace("\n", " ")
-            print(f"  [{label}] {kw!r}: ...{snippet!r}...")
-            break  # one example per keyword per file
-    return found
+def summarize(obj, prefix="", depth=0, lines=None):
+    if lines is None:
+        lines = []
+    if depth > 3 or len(lines) > 60:
+        return lines
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            t = type(v).__name__
+            extra = f" len={len(v)}" if isinstance(v, (list, dict)) else f" = {v!r}"[:60]
+            lines.append(f"{prefix}{k}: {t}{extra}")
+            if isinstance(v, (dict, list)):
+                summarize(v, prefix + "  ", depth + 1, lines)
+    elif isinstance(obj, list) and obj:
+        lines.append(f"{prefix}[0] of {len(obj)}:")
+        summarize(obj[0], prefix + "  ", depth + 1, lines)
+    return lines
 
 
 def main():
-    page = get(f"{BASE}/{SLUG}")
-    html = page.text
-    print(f"page status={page.status_code} len={len(html)}")
-
-    # All script srcs and any absolute URLs to JS.
-    srcs = set(re.findall(r'<script[^>]+src="([^"]+)"', html))
-    srcs |= set(re.findall(r'"(https://[^"]+\.js[^"]*)"', html))
-    # Resolve protocol-relative / relative URLs.
-    resolved = []
-    for s in srcs:
-        if s.startswith("//"):
-            resolved.append("https:" + s)
-        elif s.startswith("http"):
-            resolved.append(s)
-        elif s.startswith("/"):
-            resolved.append(BASE + s)
-    resolved = sorted(set(resolved))
-    print(f"\nfound {len(resolved)} script url(s):")
-    for s in resolved:
-        print(f"  {s}")
-
-    # Also extract all path-ish strings from inline HTML that mention keywords.
-    print("\n--- inline HTML keyword scan ---")
-    grep(html, "html")
-
-    # Fetch each bundle and scan it.
-    print("\n--- bundle scans ---")
-    api_paths = set()
-    for url in resolved:
+    for url in CANDIDATES:
+        print("=" * 70)
+        print("GET", url)
         try:
-            r = get(url)
-            body = r.text
-            print(f"\n# {url}  (status={r.status_code} len={len(body)})")
-            grep(body, "js")
-            # Capture concrete path fragments mentioning the keywords.
-            for m in re.finditer(r'["\'`](/[A-Za-z0-9/_\-.{}$]*(?:availab|booking|scheduler|meeting-links)[A-Za-z0-9/_\-.{}$]*)["\'`]', body):
-                api_paths.add(m.group(1))
-            for m in re.finditer(r'(https://[A-Za-z0-9.\-]+/[A-Za-z0-9/_\-.{}$]*(?:availab|booking|scheduler|meeting-links)[A-Za-z0-9/_\-.{}$]*)', body):
-                api_paths.add(m.group(1))
+            r = requests.get(url, headers=HEADERS, timeout=30)
+            ct = r.headers.get("content-type", "")
+            print(f"status={r.status_code} content-type={ct} len={len(r.text)}")
+            if "json" in ct or r.text.lstrip().startswith(("{", "[")):
+                data = r.json()
+                print("--- structure ---")
+                for ln in summarize(data):
+                    print(ln)
+                print("--- raw head (1500) ---")
+                print(json.dumps(data)[:1500])
+            else:
+                print("body head:", r.text[:160])
         except Exception as exc:  # noqa
-            print(f"\n# {url}  ERROR {exc}")
-
-    print("\n=== candidate API path fragments ===")
-    for p in sorted(api_paths):
-        print(f"  {p}")
+            print("ERROR", exc)
 
 
 if __name__ == "__main__":
