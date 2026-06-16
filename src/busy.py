@@ -1,9 +1,8 @@
-"""Compute booked/busy slots as the complement of the open availability.
+"""Turn raw busy periods into working-hours busy blocks for the calendar feed.
 
-The public page only lists OPEN slots. Within the working-hours grid
-(09:00-18:00 Berlin, Mon-Fri at the link's slot length), any cell that is NOT
-open is treated as booked. Past cells are skipped so the feed never carries
-busy events for time that has already elapsed.
+Each booked period from HubSpot is clipped to the configured working window
+(09:00-18:00 Berlin) on weekdays, split per day, trimmed to drop the past, and
+overlapping/adjacent results are merged into clean blocks.
 """
 from __future__ import annotations
 
@@ -12,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 from .config import Config
-from .hubspot_client import Availability
+from .hubspot_client import BusyPeriod
 
 
 @dataclass(frozen=True)
@@ -21,69 +20,46 @@ class BusySlot:
     end: datetime  # timezone-aware, Berlin local
 
 
-def _minute_key(dt: datetime) -> datetime:
-    return dt.replace(second=0, microsecond=0)
-
-
 def compute_busy(
-    availability: Availability,
+    periods: list[BusyPeriod],
     config: Config,
     now: datetime | None = None,
 ) -> list[BusySlot]:
     tz = ZoneInfo(config.timezone)
     now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
 
-    step = timedelta(minutes=availability.duration_minutes or 30)
-    step_min = int(step.total_seconds() // 60)
+    slots: list[BusySlot] = []
+    for period in periods:
+        start = period.start.astimezone(tz)
+        end = period.end.astimezone(tz)
 
-    # Set of OPEN slot starts, keyed by Berlin-local minute.
-    available_keys = {
-        _minute_key(s.start.astimezone(tz)) for s in availability.slots
-    }
+        day = start.date()
+        last_day = end.date()
+        while day <= last_day:
+            if day.weekday() in config.work_days:
+                win_start = datetime(day.year, day.month, day.day, config.work_start_hour, 0, tzinfo=tz)
+                win_end = datetime(day.year, day.month, day.day, config.work_end_hour, 0, tzinfo=tz)
+                seg_start = max(start, win_start)
+                seg_end = min(end, win_end)
+                # Drop fully-past segments; trim a segment that is partly past.
+                if seg_end.astimezone(timezone.utc) > now:
+                    if seg_start.astimezone(timezone.utc) < now:
+                        seg_start = now.astimezone(tz)
+                    if seg_start < seg_end:
+                        slots.append(BusySlot(start=seg_start, end=seg_end))
+            day += timedelta(days=1)
 
-    if not availability.slots:
-        return []
-
-    starts = [s.start.astimezone(tz) for s in availability.slots]
-    ends = [s.end.astimezone(tz) for s in availability.slots]
-    first_date = min(starts).date()
-    last_date = max(ends).date()
-
-    # Phase-align the grid to the observed availability cadence, in case slots do
-    # not start exactly on `work_start_hour` (buffers/custom start times).
-    sample = min(starts)
-    minutes_from_workstart = (sample.hour * 60 + sample.minute) - config.work_start_hour * 60
-    phase = minutes_from_workstart % step_min if step_min else 0
-
-    busy: list[BusySlot] = []
-    day = first_date
-    while day <= last_date:
-        if day.weekday() in config.work_days:
-            cursor = datetime(
-                day.year, day.month, day.day, config.work_start_hour, 0, tzinfo=tz
-            ) + timedelta(minutes=phase)
-            day_end = datetime(
-                day.year, day.month, day.day, config.work_end_hour, 0, tzinfo=tz
-            )
-            while cursor + step <= day_end:
-                if cursor.astimezone(timezone.utc) >= now:  # skip past cells
-                    if _minute_key(cursor) not in available_keys:
-                        busy.append(BusySlot(start=cursor, end=cursor + step))
-                cursor += step
-        day += timedelta(days=1)
-
-    return _merge_adjacent(busy)
+    return _merge(slots)
 
 
-def _merge_adjacent(slots: list[BusySlot]) -> list[BusySlot]:
-    """Collapse consecutive busy cells into single contiguous blocks."""
+def _merge(slots: list[BusySlot]) -> list[BusySlot]:
     if not slots:
         return []
     slots = sorted(slots, key=lambda s: s.start)
     merged = [slots[0]]
     for s in slots[1:]:
         last = merged[-1]
-        if s.start <= last.end:  # contiguous (or overlapping)
+        if s.start <= last.end:  # overlapping or adjacent
             if s.end > last.end:
                 merged[-1] = BusySlot(start=last.start, end=s.end)
         else:

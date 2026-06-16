@@ -1,4 +1,4 @@
-"""CLI entrypoint: fetch HubSpot availability, compute busy slots, write busy.ics.
+"""CLI entrypoint: fetch HubSpot busy times, clip to working hours, write busy.ics.
 
 Usage:
   python -m src.main                # honor the 19:00 Berlin time guard
@@ -12,7 +12,7 @@ import sys
 
 from .busy import compute_busy
 from .config import Config
-from .hubspot_client import fetch_availability
+from .hubspot_client import fetch_busy_periods
 from .ics_writer import write_ics
 from .timeguard import should_run
 
@@ -34,14 +34,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"skipped: not the {config.target_hour}:00 {config.timezone} hour")
         return 0
 
-    print(f"Fetching availability: {config.endpoint_url}")
-    availability = fetch_availability(config)
-    print(
-        f"Open slots: {len(availability.slots)} "
-        f"(slot length {availability.duration_minutes} min)"
-    )
+    print(f"Fetching {config.months_ahead} month(s) of busy times for slug "
+          f"{config.hubspot_slug!r} from {config.hubspot_api_base}")
+    periods = fetch_busy_periods(config)
+    print(f"Fetched {len(periods)} raw busy period(s)")
 
-    busy = compute_busy(availability, config)
+    busy = compute_busy(periods, config)
     print(f"Computed {len(busy)} busy block(s) within {config.work_start_hour:02d}:00-"
           f"{config.work_end_hour:02d}:00 {config.timezone}, days {sorted(config.work_days)}")
 

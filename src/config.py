@@ -37,12 +37,17 @@ def _work_days(default: tuple[int, ...]) -> tuple[int, ...]:
 @dataclass(frozen=True)
 class Config:
     hubspot_slug: str = field(default_factory=lambda: _str("HUBSPOT_SLUG", "dennis-kwiatkowski"))
-    hubspot_base: str = field(default_factory=lambda: _str("HUBSPOT_BASE", "https://meetings-eu1.hubspot.com"))
-    hubspot_endpoint_template: str = field(
-        default_factory=lambda: _str(
-            "HUBSPOT_ENDPOINT_TEMPLATE", "{base}/api/booking/v1/meetings/book/{slug}"
-        )
+    # Regional HubSpot API gateway that serves the public meetings endpoints.
+    # EU portals use api-eu1.hubapi.com; US portals use api.hubapi.com.
+    hubspot_api_base: str = field(default_factory=lambda: _str("HUBSPOT_API_BASE", "https://api-eu1.hubapi.com"))
+    availability_path: str = field(
+        default_factory=lambda: _str("HUBSPOT_AVAILABILITY_PATH", "/meetings-public/v3/book/availability-page")
     )
+    # Public meetings page host, used for Referer/Origin headers.
+    referer_base: str = field(default_factory=lambda: _str("HUBSPOT_REFERER_BASE", "https://meetings-eu1.hubspot.com"))
+    # How many monthly availability pages to fetch (monthOffset 0..N-1).
+    months_ahead: int = field(default_factory=lambda: _int("MONTHS_AHEAD", 3))
+
     work_start_hour: int = field(default_factory=lambda: _int("WORK_START_HOUR", 9))
     work_end_hour: int = field(default_factory=lambda: _int("WORK_END_HOUR", 18))
     work_days: tuple[int, ...] = field(default_factory=lambda: _work_days((0, 1, 2, 3, 4)))
@@ -51,10 +56,12 @@ class Config:
     output_path: str = field(default_factory=lambda: _str("OUTPUT_PATH", "output/busy.ics"))
     calendar_name: str = field(default_factory=lambda: _str("CALENDAR_NAME", "HubSpot Busy"))
 
-    @property
-    def endpoint_url(self) -> str:
-        return self.hubspot_endpoint_template.format(
-            base=self.hubspot_base.rstrip("/"), slug=self.hubspot_slug
+    def availability_url(self, month_offset: int) -> str:
+        base = self.hubspot_api_base.rstrip("/")
+        path = self.availability_path
+        return (
+            f"{base}{path}?slug={self.hubspot_slug}"
+            f"&monthOffset={month_offset}&timezone={self.timezone}"
         )
 
     def validate(self) -> None:
@@ -64,3 +71,5 @@ class Config:
             raise ValueError("WORK_START_HOUR/WORK_END_HOUR are out of range")
         if not self.work_days:
             raise ValueError("WORK_DAYS resolved to an empty set")
+        if self.months_ahead < 1:
+            raise ValueError("MONTHS_AHEAD must be >= 1")
