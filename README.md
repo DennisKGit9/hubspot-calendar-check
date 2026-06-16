@@ -4,11 +4,9 @@ Publishes a **subscribable calendar feed** (`.ics`) of the time slots that are
 already **booked** on a public HubSpot meetings link, so you can see your booked
 availability in any calendar app.
 
-The HubSpot page (`https://meetings-eu1.hubspot.com/dennis-kwiatkowski`) only
-shows *open* slots. This tool inverts that: within working hours
-(**09:00–18:00 Berlin, Mon–Fri**, at the link's slot length) any slot that is
-**not** open is treated as booked and emitted as a busy block titled
-**"Booked (HubSpot)"**.
+The tool reads the host's actual booked/busy blocks from the meetings link's
+public availability API, clips them to working hours (**09:00–18:00 Berlin,
+Mon–Fri**), and emits each as a busy block titled **"Booked (HubSpot)"**.
 
 A GitHub Action rebuilds the feed **once a day at 19:00 CET/CEST** and publishes
 it to GitHub Pages. You subscribe to the URL once; your calendar re-polls it
@@ -18,10 +16,12 @@ automatically.
 
 ## How it works
 
-1. `src/hubspot_client.py` fetches the public availability JSON (browser-like
-   headers — the endpoint 403s plain clients).
-2. `src/busy.py` computes booked slots = working-hours grid **minus** open slots
-   (past slots skipped; contiguous busy cells merged into one block).
+1. `src/hubspot_client.py` fetches the public availability API
+   (`api-eu1.hubapi.com/meetings-public/v3/book/availability-page`, no auth) for
+   the next few months and reads `allUsersBusyTimes[].busyTimes` — the host's
+   real booked periods.
+2. `src/busy.py` clips each booked period to 09:00–18:00 on weekdays, drops past
+   time, and merges overlapping/adjacent blocks.
 3. `src/ics_writer.py` writes a full-snapshot `output/busy.ics` with deterministic
    event UIDs (re-publishing updates events in place; freed slots disappear).
 4. `.github/workflows/sync.yml` runs daily and deploys the feed to Pages. Two UTC
@@ -64,8 +64,10 @@ timezone, output path). All values are optional.
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `HUBSPOT_SLUG` | `dennis-kwiatkowski` | Meetings link slug |
-| `HUBSPOT_BASE` | `https://meetings-eu1.hubspot.com` | Portal host |
-| `HUBSPOT_ENDPOINT_TEMPLATE` | `{base}/api/booking/v1/meetings/book/{slug}` | Availability endpoint |
+| `HUBSPOT_API_BASE` | `https://api-eu1.hubapi.com` | Regional API gateway (EU; use `https://api.hubapi.com` for US) |
+| `HUBSPOT_AVAILABILITY_PATH` | `/meetings-public/v3/book/availability-page` | Public availability endpoint path |
+| `HUBSPOT_REFERER_BASE` | `https://meetings-eu1.hubspot.com` | Meetings page host (Referer/Origin headers) |
+| `MONTHS_AHEAD` | `3` | Months of availability to fetch (monthOffset 0…N-1) |
 | `WORK_START_HOUR` / `WORK_END_HOUR` | `9` / `18` | Working-hours window (Berlin) |
 | `WORK_DAYS` | `0,1,2,3,4` | Weekdays to consider (Mon=0 … Sun=6) |
 | `TIMEZONE` | `Europe/Berlin` | Link timezone |
@@ -75,10 +77,10 @@ timezone, output path). All values are optional.
 
 ## Caveats
 
-- The public page exposes only free/busy — no meeting titles or attendees, so
+- The API exposes only free/busy timing — no meeting titles or attendees, so
   events are generic busy blocks.
-- "Booked" can't be distinguished from other blocked time (buffers, time-off);
-  any unavailable working-hour slot is treated as busy.
-- If HubSpot changes the availability JSON shape, `fetch_availability` raises with
-  a diagnostic snippet — confirm the live request in your browser's network tab
-  and adjust `HUBSPOT_ENDPOINT_TEMPLATE` or the parser.
+- Busy blocks come from the host's connected calendar, clipped to working hours;
+  buffers/min-notice are not included (only actual booked/blocked time).
+- If HubSpot changes the JSON shape, `fetch_busy_periods` raises with a
+  diagnostic snippet — confirm the live request in your browser's network tab and
+  adjust `HUBSPOT_API_BASE` / `HUBSPOT_AVAILABILITY_PATH` or the parser.
