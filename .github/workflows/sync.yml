@@ -11,22 +11,18 @@ on:
         type: boolean
         default: true
 
+# Need write access to push the generated feed to the gh-pages branch.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Allow only one publish at a time; never cancel an in-progress deploy.
+# Never run two publishes at once; never cancel an in-progress one.
 concurrency:
-  group: pages
+  group: publish-busy-ics
   cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -54,13 +50,30 @@ jobs:
             echo "Time guard skipped this run; keeping the previously published feed."
           fi
 
-      - name: Upload Pages artifact
+      # Publish the feed to the gh-pages branch via git (no Actions artifact
+      # storage involved, so this is unaffected by the artifact storage quota).
+      - name: Publish feed to gh-pages
         if: steps.build.outputs.built == 'true'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: output
-
-      - name: Deploy to GitHub Pages
-        id: deploy
-        if: steps.build.outputs.built == 'true'
-        uses: actions/deploy-pages@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          work="$(mktemp -d)"
+          cp output/busy.ics "$work/busy.ics"
+          cat > "$work/index.html" <<'HTML'
+          <!doctype html><meta charset="utf-8"><title>HubSpot Busy feed</title>
+          <body style="font-family:system-ui;max-width:40rem;margin:4rem auto">
+          <h1>HubSpot Busy feed</h1>
+          <p>Subscribe to <a href="busy.ics">busy.ics</a> in your calendar app
+          (Google Calendar: <em>Other calendars &rarr; From URL</em>).</p>
+          </body>
+          HTML
+          cd "$work"
+          git init -q
+          git checkout -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "Publish busy.ics ($(date -u +%FT%TZ))"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+          echo "Published to gh-pages."
