@@ -1,0 +1,66 @@
+name: hubspot-busy-ics
+
+on:
+  schedule:
+    - cron: "0 17 * * *"   # 19:00 Berlin during CEST (summer)
+    - cron: "0 18 * * *"   # 19:00 Berlin during CET  (winter)
+  workflow_dispatch:
+    inputs:
+      once:
+        description: "Bypass the 19:00 Berlin time guard"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one publish at a time; never cancel an in-progress deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Build busy.ics
+        id: build
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python -m src.main
+          elif [ "${{ inputs.once }}" = "false" ]; then
+            python -m src.main
+          else
+            python -m src.main --once
+          fi
+          if [ -f output/busy.ics ]; then
+            echo "built=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "built=false" >> "$GITHUB_OUTPUT"
+            echo "Time guard skipped this run; keeping the previously published feed."
+          fi
+
+      - name: Upload Pages artifact
+        if: steps.build.outputs.built == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: output
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        if: steps.build.outputs.built == 'true'
+        uses: actions/deploy-pages@v4
