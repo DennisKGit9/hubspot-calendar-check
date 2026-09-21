@@ -2,14 +2,15 @@ name: hubspot-busy-ics
 
 on:
   schedule:
-    - cron: "0 17 * * *"   # 19:00 Berlin during CEST (summer)
-    - cron: "0 18 * * *"   # 19:00 Berlin during CET  (winter)
-  workflow_dispatch:
-    inputs:
-      once:
-        description: "Bypass the 19:00 Berlin time guard"
-        type: boolean
-        default: true
+    # Twice daily for resilience against GitHub Actions' scheduling delays
+    # (each run rebuilds against whatever is actually booked *at run time*,
+    # so the exact time a run lands no longer matters). Minutes are off
+    # :00 on purpose: GitHub's scheduler queue is most congested at the top
+    # of the hour, which is what caused runs to land hours late and get
+    # silently skipped.
+    - cron: "13 8 * * *"
+    - cron: "47 17 * * *"
+  workflow_dispatch: {}
 
 # Need write access to push the generated feed to the gh-pages branch.
 permissions:
@@ -36,18 +37,18 @@ jobs:
       - name: Build busy.ics
         id: build
         run: |
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            python -m src.main
-          elif [ "${{ inputs.once }}" = "false" ]; then
-            python -m src.main
-          else
-            python -m src.main --once
-          fi
+          # Always build: compute_busy() already drops anything before the
+          # actual wall-clock time at run time, so there's no need to gate
+          # this on the schedule having fired at a particular hour (an
+          # earlier exact-hour time guard made every run a no-op once
+          # GitHub started delivering scheduled runs hours late).
+          python -m src.main --once
           if [ -f output/busy.ics ]; then
             echo "built=true" >> "$GITHUB_OUTPUT"
           else
             echo "built=false" >> "$GITHUB_OUTPUT"
-            echo "Time guard skipped this run; keeping the previously published feed."
+            echo "::error::src.main did not produce output/busy.ics"
+            exit 1
           fi
 
       # Publish the feed to the gh-pages branch via git (no Actions artifact
