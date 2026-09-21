@@ -8,9 +8,8 @@ The tool reads the host's actual booked/busy blocks from the meetings link's
 public availability API, clips them to working hours (**09:00–18:00 Berlin,
 Mon–Fri**), and emits each as a busy block titled **"Booked (HubSpot)"**.
 
-A GitHub Action rebuilds the feed **once a day at 19:00 CET/CEST** and publishes
-it to GitHub Pages. You subscribe to the URL once; your calendar re-polls it
-automatically.
+A GitHub Action rebuilds the feed **twice a day** and publishes it to GitHub
+Pages. You subscribe to the URL once; your calendar re-polls it automatically.
 
 > **Feed URL:** `https://denniskgit9.github.io/hubspot-calendar-check/busy.ics`
 
@@ -24,16 +23,20 @@ automatically.
    time, and merges overlapping/adjacent blocks.
 3. `src/ics_writer.py` writes a full-snapshot `output/busy.ics` with deterministic
    event UIDs (re-publishing updates events in place; freed slots disappear).
-4. `.github/workflows/sync.yml` runs daily and force-pushes the feed to the
-   `gh-pages` branch (served by Pages "Deploy from a branch" — no Actions
-   artifact storage involved). Two UTC crons (17:00 + 18:00) cover DST;
-   `src/timeguard.py` lets only the run that is 19:00 in Berlin proceed.
+4. `.github/workflows/sync.yml` runs twice a day and force-pushes the feed to
+   the `gh-pages` branch (served by Pages "Deploy from a branch" — no Actions
+   artifact storage involved). Every run rebuilds unconditionally: `compute_busy()`
+   drops anything before the actual time at run time, so there's no need to
+   gate on the schedule landing at a particular hour — which matters because
+   GitHub does not guarantee scheduled runs fire on time and can delay them by
+   hours, especially for crons at the top of the hour. (`src/timeguard.py` /
+   `should_run()` still exist for opt-in local/manual use via `python -m
+   src.main` without `--once`, but the CI workflow no longer relies on them.)
 
 ## One-time setup
 
-1. **Run the workflow once:** **Actions → hubspot-busy-ics → Run workflow**
-   (leave "Bypass the time guard" checked). This builds the feed and force-pushes
-   it to the `gh-pages` branch.
+1. **Run the workflow once:** **Actions → hubspot-busy-ics → Run workflow**.
+   This builds the feed and force-pushes it to the `gh-pages` branch.
 2. **Enable GitHub Pages:** repo **Settings → Pages → Source = "Deploy from a
    branch"**, branch **`gh-pages`**, folder **`/ (root)`**.
 3. **Subscribe in Google Calendar:** *Other calendars → ＋ → Subscribe to
