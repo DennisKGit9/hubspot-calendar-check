@@ -1,0 +1,492 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hubspot-calendar-check//busy feed//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:HubSpot Busy
+X-WR-TIMEZONE:Europe/Berlin
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261005T070000Z
+DTEND:20261005T091500Z
+DTSTAMP:20261003T201144Z
+UID:d09e4fd2092450b10f36ae98904f1c8f954a49b1@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261005T093000Z
+DTEND:20261005T153000Z
+DTSTAMP:20261003T201144Z
+UID:4306efdda584c7eb0a66d94a9098098c4cc6e46d@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261006T070000Z
+DTEND:20261006T140000Z
+DTSTAMP:20261003T201144Z
+UID:5176a3d7ce53879fafb55165ea3552dbe1bead50@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261006T143000Z
+DTEND:20261006T150000Z
+DTSTAMP:20261003T201144Z
+UID:746b2d46e5e56fa6263c092d2ad3c8576cda2cc1@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261006T151500Z
+DTEND:20261006T153000Z
+DTSTAMP:20261003T201144Z
+UID:f3cae6a6a96f1ec8cb702bf48ca4b7acf4a2eeb4@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261007T070000Z
+DTEND:20261007T080000Z
+DTSTAMP:20261003T201144Z
+UID:44319481693d9125dc123746ec327a21052b1946@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261007T090000Z
+DTEND:20261007T094500Z
+DTSTAMP:20261003T201144Z
+UID:dd2cef356fda430d34a06d85a51dca8660477c80@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261007T100000Z
+DTEND:20261007T103000Z
+DTSTAMP:20261003T201144Z
+UID:4876b97245a1d97c9adf5b3143ced4ef6a07aa8f@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261007T120000Z
+DTEND:20261007T123000Z
+DTSTAMP:20261003T201144Z
+UID:2d10156bef3f141c501992eb95a4b69cb8788766@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261007T151500Z
+DTEND:20261007T153000Z
+DTSTAMP:20261003T201144Z
+UID:fccc8dd9194edcaf6685ca360ec2e56f165bf843@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261008T100000Z
+DTEND:20261008T103000Z
+DTSTAMP:20261003T201144Z
+UID:083be5a832947d35f699d7c9db1ce81c36518128@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261008T150000Z
+DTEND:20261008T160000Z
+DTSTAMP:20261003T201144Z
+UID:e46a4b36c04c5d74b5cf839f9355877ba205632f@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261009T100000Z
+DTEND:20261009T103000Z
+DTSTAMP:20261003T201144Z
+UID:517417fc826c41e1ee69ae3bebf15f9790d5df9e@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261009T130000Z
+DTEND:20261009T153000Z
+DTSTAMP:20261003T201144Z
+UID:35a66e1a1d8e4facf7cccaad6a8bca5d2668dacd@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261012T070000Z
+DTEND:20261012T080000Z
+DTSTAMP:20261003T201144Z
+UID:efbea3665b163b10cc67b602976fa4f23a1c83db@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261012T100000Z
+DTEND:20261012T103000Z
+DTSTAMP:20261003T201144Z
+UID:7f7f5436e873f63d77e8887f0e58e2ff7aa698c4@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261012T110000Z
+DTEND:20261012T113000Z
+DTSTAMP:20261003T201144Z
+UID:8dddc8beb73b76d69a2c5aeff45b21c293c9555a@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261012T130000Z
+DTEND:20261012T133000Z
+DTSTAMP:20261003T201144Z
+UID:74059998f65cb21cacebad31b1f0e79bfe2717ba@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261012T140000Z
+DTEND:20261012T141500Z
+DTSTAMP:20261003T201144Z
+UID:7f1010ed056c7fa249944898b00f85a6bc0948f3@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261012T151500Z
+DTEND:20261012T153000Z
+DTSTAMP:20261003T201144Z
+UID:f7c1666084e7e952dc6cb5a486c8c6c655249fea@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261013T070000Z
+DTEND:20261013T080000Z
+DTSTAMP:20261003T201144Z
+UID:0cbc188619379a5bfa2f734835601695b73e7c6d@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261013T100000Z
+DTEND:20261013T103000Z
+DTSTAMP:20261003T201144Z
+UID:dc5164c9024440f1de49089b7502153128cfa2b8@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261013T151500Z
+DTEND:20261013T153000Z
+DTSTAMP:20261003T201144Z
+UID:276bf264d075f53a2211127b6d6a8ca1a53ed1d8@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261014T090000Z
+DTEND:20261014T103000Z
+DTSTAMP:20261003T201144Z
+UID:fe4f61c6215f9360b1051ebe1da685a70bcbb2bb@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261014T151500Z
+DTEND:20261014T153000Z
+DTSTAMP:20261003T201144Z
+UID:9d421c7a440bad1e9c25cfd41a8d99a5281389e0@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261015T070000Z
+DTEND:20261015T084500Z
+DTSTAMP:20261003T201144Z
+UID:0a69185c5ea250a2475626d35f3dd9c4997761bb@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261015T100000Z
+DTEND:20261015T103000Z
+DTSTAMP:20261003T201144Z
+UID:6da09cd1c461bf65ad3608beb9dbc73a8177976a@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261015T141500Z
+DTEND:20261015T153000Z
+DTSTAMP:20261003T201144Z
+UID:9318e317f4de74d417809581f0cdc1954185df7d@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261016T070000Z
+DTEND:20261016T160000Z
+DTSTAMP:20261003T201144Z
+UID:0e98173e5461950ea0e3fe7f753d19f0d61c0661@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261019T070000Z
+DTEND:20261019T080000Z
+DTSTAMP:20261003T201144Z
+UID:62ee0b09174fe60b43c248e6c08a6f777f9d6722@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261019T110000Z
+DTEND:20261019T113000Z
+DTSTAMP:20261003T201144Z
+UID:ca35e7092593c8eaff4fc8804a538cfaa2fa6538@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261019T130000Z
+DTEND:20261019T133000Z
+DTSTAMP:20261003T201144Z
+UID:817fe5f8ed3b33b930f58338fbc19b0b8adb88d7@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261019T151500Z
+DTEND:20261019T153000Z
+DTSTAMP:20261003T201144Z
+UID:af244ac60a69e2253eb34eec527572468fb316eb@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261020T070000Z
+DTEND:20261020T083000Z
+DTSTAMP:20261003T201144Z
+UID:cb6cf3a15b394ecdea10b700cdd500f3933ec857@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261020T090000Z
+DTEND:20261020T120000Z
+DTSTAMP:20261003T201144Z
+UID:f7c28c5cb4e99ad2baa8a9ec34b772faabb81800@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261020T151500Z
+DTEND:20261020T153000Z
+DTSTAMP:20261003T201144Z
+UID:f1eeec022bda225ebae3b4e77219eed4a7456876@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261021T070000Z
+DTEND:20261021T120000Z
+DTSTAMP:20261003T201144Z
+UID:975ff330bd27fbbd9d40653e37ce671c87150f22@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261021T151500Z
+DTEND:20261021T153000Z
+DTSTAMP:20261003T201144Z
+UID:89113f581bd2c0c8a41439fccb0d6b47a3d2759e@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261022T070000Z
+DTEND:20261022T093000Z
+DTSTAMP:20261003T201144Z
+UID:116e430fb434bf89301dc2418cca1e5d0ccc1332@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261022T100000Z
+DTEND:20261022T103000Z
+DTSTAMP:20261003T201144Z
+UID:6e7903d43099019d136ebaa3fda3379a4f36bdba@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261022T120000Z
+DTEND:20261022T130000Z
+DTSTAMP:20261003T201144Z
+UID:b0b1e4da4fd4bbb1698f6232ae0a3ebd597a0879@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261022T151500Z
+DTEND:20261022T153000Z
+DTSTAMP:20261003T201144Z
+UID:fd1a6744983c358b5154a9bdc35bbfbbb1cf31ef@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261023T100000Z
+DTEND:20261023T103000Z
+DTSTAMP:20261003T201144Z
+UID:a872836923e3e901fe3edaa5af567eb449d03ab0@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Booked (HubSpot)
+DTSTART:20261023T133000Z
+DTEND:20261023T153000Z
+DTSTAMP:20261003T201144Z
+UID:5a460210955faf8f10e3fb4f737c345b3d699244@hubspot-calendar-check
+DESCRIPTION:Auto-generated busy block inferred from a public HubSpot meeti
+ ngs link. Managed by hubspot-calendar-check.
+LAST-MODIFIED:20261003T201144Z
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
